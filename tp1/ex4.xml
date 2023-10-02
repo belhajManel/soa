@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cv [
+    <!ELEMENT cv (about, experiences, educations, certifications?, skills+, interests+, awards*)>
+    <!ELEMENT about (fname, lname, email, address, phone, summary, linkedinUrl, githubUrl*, portfolio*)>
+    <!ELEMENT fname (#PCDATA)>
+    <!ELEMENT lname (#PCDATA)>
+    <!ELEMENT email (#PCDATA)>
+    <!ELEMENT address (#PCDATA)>
+    <!ELEMENT phone (#PCDATA)>
+    <!ELEMENT summary (#PCDATA)>
+    <!ELEMENT linkedinUrl (#PCDATA)>
+    <!ELEMENT githubUrl (#PCDATA)>
+    <!ELEMENT portfolio (#PCDATA)>
+    <!ELEMENT experiences (experience+)>
+    <!ELEMENT experience (company, expstartDate, expendDate*, location, role, tasks+)>
+    <!ELEMENT company (#PCDATA)>
+    <!ELEMENT expstartDate (#PCDATA)>
+    <!ELEMENT expendDate (#PCDATA)>
+    <!ELEMENT location (#PCDATA)>
+    <!ELEMENT role (#PCDATA)>
+    <!ELEMENT tasks (task+)>
+    <!ELEMENT task (#PCDATA)>
+    <!ELEMENT educations (education+)>
+    <!ELEMENT education (uniName, edustartDate, eduendDate*, edulocation, major, minor*)>
+    <!ELEMENT uniName (#PCDATA)>
+    <!ELEMENT edustartDate (#PCDATA)>
+    <!ELEMENT eduendDate (#PCDATA)>
+    <!ELEMENT edulocation (#PCDATA)>
+    <!ELEMENT major (#PCDATA)>
+    <!ELEMENT minor (#PCDATA)>
+    <!ELEMENT certifications (certification+)>
+    <!ELEMENT certification (certifName, provider, expiryDate*, certifLink?)>
+    <!ELEMENT certifName (#PCDATA)>
+    <!ELEMENT provider (#PCDATA)>
+    <!ELEMENT expiryDate (#PCDATA)>
+    <!ELEMENT certifLink (#PCDATA)>
+    <!ELEMENT skills (skillName+)>
+    <!ELEMENT skillName (#PCDATA)>
+    <!ELEMENT interests (interest+)>
+    <!ELEMENT interest (#PCDATA)>
+    <!ELEMENT awards (awardName, awardDate, description)>
+    <!ELEMENT awardName (#PCDATA)>
+    <!ELEMENT awardDate (#PCDATA)>
+    <!ELEMENT description (#PCDATA)>
+]>
+
+
+<cv>
+    <about>
+        <fname>Manel</fname>
+        <lname>BELHADJ</lname>
+        <email> belhaj.maanel@gmail.com </email>
+        <address> 1 rue de la paix, 75000 Paris </address>
+        <phone> +216 99 999 999 </phone>
+        <summary> I am a software engineer with 3 years of experience in the field. I am passionate about new technologies and I am always looking for new challenges. </summary>
+        <linkedinUrl> https://www.linkedin.com/in/manel-belhadj </linkedinUrl>
+        <githubUrl> https://github.com/belhajManel </githubUrl>
+        <portfolio> https://manelbelhadj.me </portfolio>
+    </about>
+    <experiences>
+         <experience>
+            <company> Utopia </company>
+            <expstartDate> 01/10/2020 </expstartDate>
+            <expendDate> 01/09/2023 </expendDate>
+            <location> Berlin </location>
+            <role> Devops Engineer </role>
+            <tasks>
+                <task> Deployment of web services on the cloud </task>
+                <task> Ensure pipelines are not creating bottlenecks for rapid deployment of code </task>
+                <task> Ensure that the codebase is always production-ready </task>
+                <task> Provide support to software developers who use the CI/CD pipelines</task>
+                <task >Identify and fix bugs which appear within devops related code</task>
+            </tasks>
+        </experience>
+        <experience>
+            <company> Sopra Steria </company>
+            <expstartDate> 01/09/2019 </expstartDate>
+            <expendDate> 01/09/2020 </expendDate>
+            <location> Paris </location>
+            <role> Software Engineer </role>
+            <tasks>
+                <task> Development of a web application for the management of the company's internal projects </task>
+                <task> Automation of the deployment of the application on the different environments </task>
+            </tasks>
+        </experience>
+    </experiences>
+    <educations>
+        <education>
+                <uniName> University of Paris </uniName>
+                <edustartDate> 01/09/2017 </edustartDate>
+                <eduendDate> 01/09/2019 </eduendDate>
+                <edulocation> Paris </edulocation>
+                <major> Software Engineering </major>
+                <minor> Computer Science </minor>
+        </education>
+    </educations>
+   
+    <certifications>
+        <certification>
+            <certifName> AWS Certified Solutions Architect </certifName>
+            <provider> Amazon </provider>
+            <expiryDate> 01/09/2025 </expiryDate>
+            <certifLink> https://www.credly.com/badges/1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z </certifLink>
+        </certification>
+        <certification>
+            <certifName> Certified Kubernetes Administrator   </certifName>
+            <provider> Cloud Native Computing Foundation </provider>
+            <expiryDate> 12/08/2026 </expiryDate>
+            <certifLink> https://www.credly.com/badges/1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z </certifLink>
+        </certification>
+        <certification>
+            <certifName> Red Hat Certified System Administrator </certifName>
+            <provider> Red Hat </provider>
+            <expiryDate> 01/09/2025 </expiryDate>
+        </certification>
+    </certifications>
+
+    <skills>
+        <skillName> Linux </skillName>
+        <skillName> Git </skillName>
+        <skillName> Python </skillName>
+        <skillName> Javascript </skillName>
+        <skillName> React </skillName>
+        <skillName> NodeJS </skillName>
+        <skillName> Docker </skillName>
+        <skillName> Kubernetes </skillName>
+        <skillName> AWS </skillName>
+        <skillName> Azure </skillName>
+    </skills>
+    <interests>
+        <interest> Reading </interest>
+        <interest> Travelling </interest>
+        <interest> Wztching anime </interest>
+    </interests>
+    <awards>
+        <awardName> Best Software Engineer </awardName>
+        <awardDate> 01/09/2019 </awardDate>
+        <description> Awarded for the best software engineer of the year </description>
+    </awards>
+</cv>

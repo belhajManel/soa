@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filmographie [
+    <!ELEMENT filmographie (film+)>
+    <!ELEMENT film (titre, annee, realisateurs, acteurs+, genre)>
+    <!ELEMENT titre (#PCDATA)>
+    <!ELEMENT annee (#PCDATA)>
+    <!ELEMENT realisateurs (realisateur+)>
+    <!ELEMENT realisateur (#PCDATA)>
+    <!ELEMENT acteurs (acteur+) >
+    <!ELEMENT acteur (#PCDATA)>
+    <!ELEMENT genre (#PCDATA)>
+]>
+
+<filmographie>
+    <film>
+        <titre>Harry Potter and the Order of the Phoenix</titre>
+        <annee>2007</annee>
+        <realisateurs>
+            <realisateur>David Yates</realisateur>
+        </realisateurs>
+        <acteurs>
+            <acteur>Daniel Radcliffe</acteur>
+            <acteur>Emma Watson</acteur>
+            <acteur>Rupert Grint</acteur>
+        </acteurs>
+        <genre>Fantasy</genre>
+    </film>
+</filmographie>
