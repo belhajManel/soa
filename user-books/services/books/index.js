@@ -1,29 +1,7 @@
 import fs from "fs";
 
-let booksData = [];
-
-const readBooksData = () => {
-  fs.readFile("../../data/books.json", "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading the file:", err);
-      return;
-    }
-    booksData = JSON.parse(data || "[]");
-  });
-};
-
-const readUsersData = () => {
-  fs.readFile("../../data/users.json", "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading the file:", err);
-      return;
-    }
-    usersData = JSON.parse(data || "[]");
-  });
-};
-
-readUsersData();
-readBooksData();
+const booksData = JSON.parse(fs.readFileSync("../../data/books.json", "utf8"));
+const usersData = JSON.parse(fs.readFileSync("../../data/users.json", "utf8"));
 
 function allowOperations(userId) {
   const user = usersData.filter((user) => {

@@ -1,16 +1,6 @@
 import fs from "fs";
 
-const readUsersData = () => {
-  fs.readFile("../../data/users.json", "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading the file:", err);
-      return;
-    }
-    users = JSON.parse(data || "[]");
-  });
-};
-
-readUsersData();
+const users = JSON.parse(fs.readFileSync("../../data/users.json", "utf-8"));
 
 const results = {
   status: "sucess",
