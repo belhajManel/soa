@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "year": 1954,
+    "genre": "Fantasy",
+    "language": "English",
+    "country": "United Kingdom",
+    "pages": 1178
+  },
+  {
+    "id": 2,
+    "name": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "year": 1937,
+    "genre": "Fantasy",
+    "language": "English",
+    "country": "United Kingdom",
+    "pages": 310
+  }
+]

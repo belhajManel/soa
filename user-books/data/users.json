@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "username": "usertahfoun",
+    "pass": "",
+    "hasPermission": true
+  },
+  {
+    "id": 2,
+    "username": "usermshtahfoun",
+    "pass": "",
+    "hasPermission": false
+  }
+]
