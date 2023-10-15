@@ -1,6 +1,12 @@
 import fs from "fs";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
-const users = JSON.parse(fs.readFileSync("../../data/users.json", "utf-8"));
+const moduleURL = import.meta.url;
+const __dirname = dirname(fileURLToPath(moduleURL));
+const filePath = path.join(__dirname, "../..", "data", "users.json");
+var users = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
 const results = {
   status: "sucess",
@@ -8,26 +14,34 @@ const results = {
   data: [],
 };
 
-export const getUsers = () => {
+export const getUsers = (req, res) => {
   Object.assign(results, { data: users });
-  return results;
+  res.json(results);
 };
 
-export const getUser = (id) => {
+export const getUser = (req, res) => {
   const user = users.filter((user) => {
-    user.id === id;
+    user.id === req.params.id;
   });
   if (user) {
     Object.assign(results, { data: user });
   } else {
     Object.assign(results, { data: "No user with specific id" });
   }
-  return results;
+  res.json(results);
 };
 
-export const addUser = (data) => {
-  users.push(data);
-  fs.writeFile("../../data/users.json", JSON.stringify(users), function (err) {
+export const addUser = (req, res) => {
+  if (!req.body) {
+    Object.assign(results, {
+      status: "fail",
+      message: "No data provided",
+    });
+    res.json(results);
+    return;
+  }
+  users.push(req.body);
+  fs.writeFile(filePath, JSON.stringify(users), function (err) {
     if (err) {
       Object.assign(results, {
         status: "fail",
@@ -36,29 +50,32 @@ export const addUser = (data) => {
     } else {
       Object.assign(results, { data: users });
     }
-    return results;
+    res.json(results);
   });
 };
 
-export const deleteUser = (id) => {
+export const deleteUser = (req, res) => {
   const filtered = users.filter((user) => {
-    user.id != id;
+    if (user.id != req.params.id) {
+      return true;
+    }
   });
-  fs.writeFile(
-    "../../data/users.json",
-    JSON.stringify(filtered),
-    function (err) {
+
+  if (filtered.length < users.length) {
+    users = filtered;
+    fs.writeFile(filePath, JSON.stringify(users), function (err) {
       if (err) {
         Object.assign(results, {
           status: "fail",
           message: "An error occured while deleting the user",
         });
       } else {
-        Object.assign(results, { data: filtered });
+        Object.assign(results, { data: users });
       }
-      return results;
-    }
-  );
-  Object.assign(results, { data: users });
-  return filtered;
+      res.json(results);
+    });
+  } else {
+    Object.assign(results, { data: "No user with specific id" });
+    res.json(results);
+  }
 };
