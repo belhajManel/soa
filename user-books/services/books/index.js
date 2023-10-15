@@ -11,21 +11,11 @@ var usersData = JSON.parse(fs.readFileSync(filePathUsers, "utf-8"));
 var booksData = JSON.parse(fs.readFileSync(filePathBooks, "utf-8"));
 
 function allowOperations(userId) {
-  var user = usersData.filter((user) => {
-    if (user.id == userId) {
-      return true;
-    }
+  const user = usersData.find((user) => {
+    user.id == userId;
   });
 
-  [user] = user;
-
-  console.log(user);
-  if (user && user?.hasPermission) {
-    return true;
-  }
-  if (!user || (user && !user?.hasPermission)) {
-    return false;
-  }
+  return user?.hasPermission || false;
 }
 
 const results = {
