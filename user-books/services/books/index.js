@@ -1,17 +1,30 @@
 import fs from "fs";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
-const booksData = JSON.parse(fs.readFileSync("../../data/books.json", "utf8"));
-const usersData = JSON.parse(fs.readFileSync("../../data/users.json", "utf8"));
+const moduleURL = import.meta.url;
+const __dirname = dirname(fileURLToPath(moduleURL));
+const filePathUsers = path.join(__dirname, "../..", "data", "users.json");
+const filePathBooks = path.join(__dirname, "../..", "data", "books.json");
+var usersData = JSON.parse(fs.readFileSync(filePathUsers, "utf-8"));
+var booksData = JSON.parse(fs.readFileSync(filePathBooks, "utf-8"));
 
 function allowOperations(userId) {
-  const user = usersData.filter((user) => {
-    user.id === userId;
+  var user = usersData.filter((user) => {
+    if (user.id == userId) {
+      return true;
+    }
   });
-  if (!user || (user && !user.hasPermission)) {
-    return false;
-  }
-  if (user && user.hasPermission) {
+
+  [user] = user;
+
+  console.log(user);
+  if (user && user?.hasPermission) {
     return true;
+  }
+  if (!user || (user && !user?.hasPermission)) {
+    return false;
   }
 }
 
@@ -21,8 +34,8 @@ const results = {
   data: [],
 };
 
-export const getBooks = (userId) => {
-  const isAllowed = allowOperations(userId);
+export const getBooks = (req, res) => {
+  const isAllowed = allowOperations(req.body.userId);
   if (isAllowed) {
     Object.assign(results, { data: booksData });
   } else {
@@ -31,13 +44,17 @@ export const getBooks = (userId) => {
       message: "Not enough permessions",
     });
   }
-  return results;
+  res.json(results);
 };
 
-export const getBook = (userId, id) => {
-  const isAllowed = allowOperations(userId);
+export const getBook = (req, res) => {
+  const isAllowed = allowOperations(req.body.userId);
   if (isAllowed) {
-    const book = booksData.find((book) => book.id === id);
+    const book = booksData.find((book) => {
+      if (book.id == req.params.id) {
+        return true;
+      }
+    });
     if (book) {
       Object.assign(results, { data: book });
     } else {
@@ -49,21 +66,36 @@ export const getBook = (userId, id) => {
       message: "Not enough permessions",
     });
   }
-  return results;
+  res.json(results);
 };
 
-export const addBook = (userId, data) => {
+export const addBook = (req, res) => {
+  const { userId, ...data } = req.body;
   const isAllowed = allowOperations(userId);
+  const isUnique = booksData.find((book) => {
+    if (book.id == data.id) {
+      return true;
+    }
+  });
+  if (isUnique && Object.keys(isUnique || {}).length > 0) {
+    Object.assign(results, {
+      status: "fail",
+      message: "Book with the same id already exists",
+    });
+    res.json(results);
+  }
   if (isAllowed) {
-    booksData.push(data);
-    fs.writeFile("../../data/books.json", JSON.stringify(booksData), (err) => {
+    booksData.push(req.body);
+    fs.writeFile(filePathBooks, JSON.stringify(booksData), (err) => {
       if (err) {
         Object.assign(results, {
           status: "fail",
           message: "An error occurred while saving book data",
         });
+        res.json(results);
       } else {
         Object.assign(results, { data: booksData });
+        res.json(results);
       }
     });
   } else {
@@ -71,19 +103,21 @@ export const addBook = (userId, data) => {
       status: "fail",
       message: "Not enough permessions",
     });
+    res.json(results);
   }
-
-  return results;
 };
 
-export const deleteBook = (userId, id) => {
-  const isAllowed = allowOperations(userId);
+export const deleteBook = (req, res) => {
+  const isAllowed = allowOperations(req.body.userId);
   if (isAllowed) {
-    const filteredBooks = booksData.filter((book) => book.id !== id);
-    fs.writeFile(
-      "../../data/books.json",
-      JSON.stringify(filteredBooks),
-      (err) => {
+    const filteredBooks = booksData.filter((book) => {
+      if (book.id != req.params.id) {
+        return true;
+      }
+    });
+    if (filteredBooks.length < booksData.length) {
+      booksData = filteredBooks;
+      fs.writeFile(filePathBooks, JSON.stringify(filteredBooks), (err) => {
         if (err) {
           Object.assign(results, {
             status: "fail",
@@ -91,15 +125,18 @@ export const deleteBook = (userId, id) => {
           });
         } else {
           Object.assign(results, { data: filteredBooks });
+          res.json(results);
         }
-      }
-    );
+      });
+    } else {
+      Object.assign(results, { message: "No book with the specific id" });
+      res.json(results);
+    }
   } else {
     Object.assign(results, {
       status: "fail",
       message: "Not enough permessions",
     });
+    res.json(results);
   }
-
-  return results;
 };
